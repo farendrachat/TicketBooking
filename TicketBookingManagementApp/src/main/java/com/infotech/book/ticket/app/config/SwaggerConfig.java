@@ -19,10 +19,19 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     @Bean
     public Docket api() { 
         return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
+        .select()                                  
+        .apis(RequestHandlerSelectors.any())              
+        .paths(PathSelectors.any())                          
+        .build();
+        /*
+         * Above config : It takes care of all rest points used throughout the application.
+         * Below config: It is restricted to a specific package with specific end points.
+         */
+        
+        /*  .select()                                  
           .apis(RequestHandlerSelectors.basePackage("com.infotech.book.ticket.app.controller"))              
           .paths(regex("/api/tickets.*"))                          
-          .build();                                           
+          .build();  */                                         
     }
     
     @Override
@@ -32,6 +41,10 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         registry.addRedirectViewController("/TicketBookingManagementApp/swagger-resources/configuration/security", "/swagger-resources/configuration/security");
         registry.addRedirectViewController("/TicketBookingManagementApp/swagger-resources", "/swagger-resources");
     }
+    
+    /*
+     * This is mandatory to show in UI
+     */
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
